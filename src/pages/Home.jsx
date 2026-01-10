@@ -12,7 +12,7 @@ export default function Home() {
         <div className="absolute top-20 left-10 w-32 h-32 bg-[#E8B4B8]/20 rounded-full blur-3xl" />
         <div className="absolute bottom-32 right-20 w-48 h-48 bg-[#B8A165]/15 rounded-full blur-3xl" />
         
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pb-16 md:pb-0">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -71,11 +71,11 @@ export default function Home() {
 
         <motion.a
           href="#sobre"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <ChevronDown className="w-8 h-8 text-[#B8A165]" />
+          <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-[#B8A165]" />
         </motion.a>
       </section>
 
@@ -170,21 +170,21 @@ export default function Home() {
       </section>
 
       {/* Products Section */}
-      <section id="produtos" className="min-h-screen py-8 px-4 bg-[#f5f1e4] relative flex items-center overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full">
+      <section id="produtos" className="min-h-screen py-4 md:py-8 px-4 bg-[#f5f1e4] relative flex items-center overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full pb-12 md:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-6"
+            className="text-center mb-3 md:mb-6"
           >
-            <span className="text-[#B8A165] uppercase tracking-[0.3em] text-sm font-medium">Coleção Exclusiva</span>
-            <h2 className="text-2xl md:text-4xl font-light text-[#4A4A4A] mt-2 mb-3">
+            <span className="text-[#B8A165] uppercase tracking-[0.3em] text-xs md:text-sm font-medium">Coleção Exclusiva</span>
+            <h2 className="text-xl md:text-4xl font-light text-[#4A4A4A] mt-1 md:mt-2 mb-2 md:mb-3">
               Nossos <span className="font-serif italic text-[#6B7B5F]">Kits Especiais</span>
             </h2>
-            <div className="w-20 h-0.5 bg-[#B8A165] mx-auto mb-3" />
-            <p className="text-[#6B7B5F] max-w-2xl mx-auto text-base">
+            <div className="w-16 md:w-20 h-0.5 bg-[#B8A165] mx-auto mb-2 md:mb-3" />
+            <p className="text-[#6B7B5F] max-w-2xl mx-auto text-sm md:text-base hidden md:block">
               Cada kit é único, montado com amor e intenção para transmitir energias positivas
             </p>
           </motion.div>
@@ -248,13 +248,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center mt-6"
+            className="text-center mt-4 md:mt-6"
           >
             <a
               href="#contato"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#6B7B5F] text-white rounded-full font-medium hover:bg-[#5A6A4E] transition-all duration-300 shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#6B7B5F] text-white rounded-full font-medium hover:bg-[#5A6A4E] transition-all duration-300 shadow-lg text-sm md:text-base"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 md:w-5 md:h-5" />
               Encomendar Meu Kit
             </a>
           </motion.div>
@@ -262,11 +262,11 @@ export default function Home() {
         
         <motion.a
           href="#diferenciais"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <ChevronDown className="w-8 h-8 text-[#B8A165]" />
+          <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-[#B8A165]" />
         </motion.a>
       </section>
 
