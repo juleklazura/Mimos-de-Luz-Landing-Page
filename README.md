@@ -22,4 +22,17 @@ npm install
 npm run dev
 ```
 
+## 🏗️ Build para Produção
 
+```bash
+npm run build
+```
+
+Os arquivos otimizados estarão na pasta `dist/`
+
+## 📱 Contato
+
+- WhatsApp: (42) 98444-2470
+- Instagram: [@mimosdeluzpg](https://www.instagram.com/mimosdeluzpg)
+
+---

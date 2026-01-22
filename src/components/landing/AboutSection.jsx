@@ -35,7 +35,7 @@ export default function AboutSection() {
           >
             <div className="aspect-square rounded-full overflow-hidden border-8 border-[#f5f1e4] shadow-2xl max-w-md mx-auto">
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_693483ff1ed338ad85888c90/6d7a06a05_Capturadetelade2025-12-0616-31-27.png"
+                src="public/6d7a06a05_Capturadetelade2025-12-0616-31-27.png"
                 alt="Kit Mimos de Luz"
                 className="w-full h-full object-cover"
               />

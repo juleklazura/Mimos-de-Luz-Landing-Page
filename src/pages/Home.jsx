@@ -108,7 +108,7 @@ export default function Home() {
             >
               <div className="aspect-square rounded-full overflow-hidden border-4 md:border-8 border-[#f5f1e4] shadow-2xl max-w-[280px] md:max-w-md mx-auto">
                 <img
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_693483ff1ed338ad85888c90/6d7a06a05_Capturadetelade2025-12-0616-31-27.png"
+                  src="/al.png"
                   alt="Kit Mimos de Luz"
                   className="w-full h-full object-cover"
                 />
@@ -195,19 +195,19 @@ export default function Home() {
                 id: 1,
                 name: 'Kit da Saúde',
                 description: 'Saúde também é se sentir acolhida. O Quartzo Verde traz vibração de cura física e equilíbrio emocional, aliviando o estresse. Inclui escalda pés, pingente de quartzo verde, toalhinha, vela aromática, mini pelúcia coração e sabonetes.',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_693483ff1ed338ad85888c90/2b0aeff26_Capturadetelade2025-12-0616-31-38.png',
+                image:"/sa.png",
               },
               {
                 id: 2,
                 name: 'Kit da Prosperidade',
                 description: 'Prepare-se para um novo ciclo de vitórias! O Citrino atrai riqueza e o Olho de Tigre concretiza metas, envolvidos pela serenidade do Anjo. Inclui anjo decorativo, toalhinha, sabonetes, escalda pés, vela aromática e pingente.',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_693483ff1ed338ad85888c90/6d7a06a05_Capturadetelade2025-12-0616-31-27.png',
+                image:"/al2.png",
               },
               {
                 id: 3,
                 name: 'Kit do Amor',
                 description: 'Um ritual de carinho com você mesma. O Quartzo Rosa acalma o coração enquanto a vela e o escalda pés relaxam seu corpo. Inclui escalda pés, pingente de quartzo rosa, toalhinha, vela aromática, mini pelúcia coração e sabonetes.',
-                image: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_693483ff1ed338ad85888c90/f903c6aec_Capturadetelade2025-12-0616-32-01.png',
+                image:"/ros.png",
               },
             ].map((product, index) => (
               <motion.div
