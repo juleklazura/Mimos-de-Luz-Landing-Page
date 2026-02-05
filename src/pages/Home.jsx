@@ -1,6 +1,241 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, Heart, Sparkles, Gift, Star, Gem, Leaf, Package, Sun, Quote, MessageCircle, Instagram, Clock, MapPin } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronLeft, ChevronRight, Heart, Sparkles, Gift, Star, Gem, Leaf, Package, Sun, Quote, MessageCircle, Instagram, Clock, MapPin } from 'lucide-react';
+
+const products = [
+  {
+    id: 1,
+    name: 'Kit da Saúde',
+    description: 'Quartzo Verde para cura e equilíbrio emocional. Inclui escalda pés, pingente, toalhinha, vela aromática, pelúcia e sabonetes.',
+    image: '/sa.png',
+  },
+  {
+    id: 2,
+    name: 'Kit da Prosperidade',
+    description: 'Citrino e Olho de Tigre para atrair riqueza e concretizar metas. Inclui anjo decorativo, toalhinha, sabonetes, escalda pés e vela.',
+    image: '/al2.png',
+  },
+  {
+    id: 3,
+    name: 'Kit do Amor',
+    description: 'Quartzo Rosa para acalmar o coração. Inclui escalda pés, pingente, toalhinha, vela aromática, pelúcia coração e sabonetes.',
+    image: '/ros.png',
+  },
+  {
+    id: 4,
+    name: 'Kit Aniversário Masculino',
+    description: 'Celebre com estilo! Inclui cheirinho para carro, chaveiro de cristal, licor alemão de ervas, chocolate e pelúcia.',
+    image: '/kit-aniv-masc.jpg',
+  },
+  {
+    id: 5,
+    name: 'Kit Aniversário Feminino',
+    description: 'Vela aromática em buquê, coração de pelúcia, chaveiro e chocolate. Um mimo carregado de amor e doçura.',
+    image: '/kit-aniv-fem.png',
+  },
+  {
+    id: 6,
+    name: 'Kit da Vitória',
+    description: 'Para presentear um formando! Taça, mini espumante, caneta com cristais e capelo com Ferrero Rocher.',
+    image: '/ki-vit.jpg',
+  },
+  {
+    id: 7,
+    name: 'Kit Doce Chegada',
+    description: 'Para celebrar o nascimento! Toalhinha inspiradora, vela de ursinho, sabonetes de pezinhos, pelúcia e chá.',
+    image: '/kit-nasc.jpg',
+  },
+];
+
+function ProductsCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const total = products.length;
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const prev = useCallback(() => {
+    setCurrent((prev) => (prev - 1 + total) % total);
+  }, [total]);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, next]);
+
+  // Calcula quais cards mostrar (3 por vez no desktop, 1 no mobile)
+  const getVisibleProducts = () => {
+    const visible = [];
+    for (let i = -1; i <= 1; i++) {
+      const idx = (current + i + total) % total;
+      visible.push({ ...products[idx], position: i });
+    }
+    return visible;
+  };
+
+  return (
+    <section id="produtos" className="min-h-screen py-8 md:py-16 px-4 bg-[#f5f1e4] relative flex items-center overflow-hidden">
+      <div className="max-w-7xl mx-auto w-full pb-12 md:pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-6 md:mb-10"
+        >
+          <span className="text-[#B8A165] uppercase tracking-[0.3em] text-xs md:text-sm font-medium">Coleção Exclusiva</span>
+          <h2 className="text-xl md:text-4xl font-light text-[#4A4A4A] mt-1 md:mt-2 mb-2 md:mb-3">
+            Nossos <span className="font-serif italic text-[#6B7B5F]">Kits Especiais</span>
+          </h2>
+          <div className="w-16 md:w-20 h-0.5 bg-[#B8A165] mx-auto mb-2 md:mb-3" />
+          <p className="text-[#6B7B5F] max-w-2xl mx-auto text-sm md:text-base hidden md:block">
+            Cada kit é único, montado com amor e intenção para transmitir energias positivas
+          </p>
+        </motion.div>
+
+        {/* Carousel */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+        >
+          {/* Setas */}
+          <button
+            onClick={prev}
+            className="absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-[#4A4A4A]" />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Próximo"
+          >
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-[#4A4A4A]" />
+          </button>
+
+          {/* Cards - Desktop: 3 visíveis / Mobile: 1 visível */}
+          <div className="overflow-hidden px-8 md:px-12">
+            {/* Mobile: card único */}
+            <div className="md:hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={products[current].id}
+                  initial={{ opacity: 0, x: 80 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -80 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="w-full"
+                >
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img
+                        src={products[current].image}
+                        alt={products[current].name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-xl font-medium text-[#4A4A4A]">{products[current].name}</h3>
+                        <button className="p-2 rounded-full hover:bg-[#f5f1e4] transition-colors">
+                          <Heart className="w-5 h-5 text-[#E8B4B8]" />
+                        </button>
+                      </div>
+                      <p className="text-[#6B7B5F] text-sm leading-relaxed">
+                        {products[current].description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Desktop: 3 cards */}
+            <div className="hidden md:grid md:grid-cols-3 md:gap-6">
+              {getVisibleProducts().map((product) => (
+                <motion.div
+                  key={`${product.id}-${current}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="group"
+                >
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full flex flex-col">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-xl font-medium text-[#4A4A4A]">{product.name}</h3>
+                        <button className="p-2 rounded-full hover:bg-[#f5f1e4] transition-colors">
+                          <Heart className="w-5 h-5 text-[#E8B4B8]" />
+                        </button>
+                      </div>
+                      <p className="text-[#6B7B5F] text-sm leading-relaxed flex-1 line-clamp-4">
+                        {product.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-6">
+            {products.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrent(index)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  index === current
+                    ? 'bg-[#B8A165] w-8'
+                    : 'bg-[#B8A165]/30 hover:bg-[#B8A165]/50 w-2.5'
+                }`}
+                aria-label={`Ir para produto ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-6 md:mt-8"
+        >
+          <a
+            href="#contato"
+            className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#6B7B5F] text-white rounded-full font-medium hover:bg-[#5A6A4E] transition-all duration-300 shadow-lg text-sm md:text-base"
+          >
+            <Heart className="w-4 h-4 md:w-5 md:h-5" />
+            Encomendar Meu Kit
+          </a>
+        </motion.div>
+      </div>
+
+      <motion.a
+        href="#diferenciais"
+        className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-[#B8A165]" />
+      </motion.a>
+    </section>
+  );
+}
 
 export default function Home() {
   return (
@@ -169,106 +404,8 @@ export default function Home() {
         </motion.a>
       </section>
 
-      {/* Products Section */}
-      <section id="produtos" className="min-h-screen py-4 md:py-8 px-4 bg-[#f5f1e4] relative flex items-center overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full pb-12 md:pb-0">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-3 md:mb-6"
-          >
-            <span className="text-[#B8A165] uppercase tracking-[0.3em] text-xs md:text-sm font-medium">Coleção Exclusiva</span>
-            <h2 className="text-xl md:text-4xl font-light text-[#4A4A4A] mt-1 md:mt-2 mb-2 md:mb-3">
-              Nossos <span className="font-serif italic text-[#6B7B5F]">Kits Especiais</span>
-            </h2>
-            <div className="w-16 md:w-20 h-0.5 bg-[#B8A165] mx-auto mb-2 md:mb-3" />
-            <p className="text-[#6B7B5F] max-w-2xl mx-auto text-sm md:text-base hidden md:block">
-              Cada kit é único, montado com amor e intenção para transmitir energias positivas
-            </p>
-          </motion.div>
-
-          <div className="md:grid md:grid-cols-3 md:gap-8 flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4">
-            {[
-              {
-                id: 1,
-                name: 'Kit da Saúde',
-                description: 'Saúde também é se sentir acolhida. O Quartzo Verde traz vibração de cura física e equilíbrio emocional, aliviando o estresse. Inclui escalda pés, pingente de quartzo verde, toalhinha, vela aromática, mini pelúcia coração e sabonetes.',
-                image:"/sa.png",
-              },
-              {
-                id: 2,
-                name: 'Kit da Prosperidade',
-                description: 'Prepare-se para um novo ciclo de vitórias! O Citrino atrai riqueza e o Olho de Tigre concretiza metas, envolvidos pela serenidade do Anjo. Inclui anjo decorativo, toalhinha, sabonetes, escalda pés, vela aromática e pingente.',
-                image:"/al2.png",
-              },
-              {
-                id: 3,
-                name: 'Kit do Amor',
-                description: 'Um ritual de carinho com você mesma. O Quartzo Rosa acalma o coração enquanto a vela e o escalda pés relaxam seu corpo. Inclui escalda pés, pingente de quartzo rosa, toalhinha, vela aromática, mini pelúcia coração e sabonetes.',
-                image:"/ros.png",
-              },
-            ].map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="group md:h-full w-[85vw] md:w-auto flex-shrink-0 snap-center"
-              >
-                <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full flex flex-col">
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-
-                  <div className="p-8 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-2xl font-medium text-[#4A4A4A]">{product.name}</h3>
-                      <button className="p-2 rounded-full hover:bg-[#f5f1e4] transition-colors">
-                        <Heart className="w-6 h-6 text-[#E8B4B8]" />
-                      </button>
-                    </div>
-                    <p className="text-[#6B7B5F] text-base leading-relaxed flex-1">
-                      {product.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center mt-4 md:mt-6"
-          >
-            <a
-              href="#contato"
-              className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#6B7B5F] text-white rounded-full font-medium hover:bg-[#5A6A4E] transition-all duration-300 shadow-lg text-sm md:text-base"
-            >
-              <Heart className="w-4 h-4 md:w-5 md:h-5" />
-              Encomendar Meu Kit
-            </a>
-          </motion.div>
-        </div>
-        
-        <motion.a
-          href="#diferenciais"
-          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-[#B8A165]" />
-        </motion.a>
-      </section>
+      {/* Products Section - Carousel */}
+      <ProductsCarousel />
 
       {/* Features Section */}
       <section id="diferenciais" className="min-h-screen py-24 px-4 bg-gradient-to-b from-white to-[#f5f1e4] relative flex items-center overflow-hidden">
